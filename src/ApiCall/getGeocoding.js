@@ -1,11 +1,13 @@
-export default async function getCurrentWeather(zip, countryCode, appid) {
+export default async function getGeocoding(zip, countryCode, appid) {
     /*
     zip required - Zip/post code. 
     countryCode required - Use ISO 3166 country codes.
     appid required - Your unique API key (you can always find it on your account page under the "API key" tab)
     */
+    const url = `http://api.openweathermap.org/geo/1.0/zip?zip=${zip},${countryCode}&appid=${appid}`;
+
     try {
-        const response = await fetch(`http://api.openweathermap.org/geo/1.0/zip?zip=${zip},${countryCode}&appid=${appid}`)
+        const response = await fetch(url);
         const result = await response.json();
         //console.log(result);
         /* 
@@ -18,6 +20,6 @@ export default async function getCurrentWeather(zip, countryCode, appid) {
 
         return result;
     } catch (e) {
-        console.error("getCurrentWeather() error:", e)
+        console.error("getGeocoding() error:", e)
     }
 }

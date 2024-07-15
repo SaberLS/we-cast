@@ -1,4 +1,4 @@
-import { addParIfE } from "../helpers";
+import { addParIfE } from "../Helpers/helpers";
 
 export default async function getCurrentWeather(lat, lon, appid, mode, units = 'metric', lang = 'pl') {
     /*

@@ -1,0 +1,1 @@
+export const addParIfE = (par, parName) => par ? `&${parName}=${par}` : ''; //add Parameter If Exists

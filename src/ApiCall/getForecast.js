@@ -1,7 +1,7 @@
 //You can search weather forecast for 5 days with data every 3 hours by geographic coordinates.
 //All weather data can be obtained in JSON and XML formats.
 
-import { addParIfE } from "../helpers";
+import { addParIfE } from "../Helpers/helpers";
 
 export default async function getForecast(lat, lon, appid, cnt, mode, units = "metric", lang = 'PL') {
     /*

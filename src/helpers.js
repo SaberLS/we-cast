@@ -1,1 +1,0 @@
-export const addParIfE = (par, parName) => par ? `&${parName}=${par}` : '';
