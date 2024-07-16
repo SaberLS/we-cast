@@ -13,6 +13,7 @@ import {
 import SearchAppBar from "../AppBar/SearchAppBar";
 import WeatherWidget from "../AppBar/LocationInfo";
 import getReverseGeocoding from "../../ApiCall/getReverseGeocoding";
+import Forecast from "../Forecast/Forecast";
 
 function App() {
   const [location, setLocation] = useState({
@@ -26,7 +27,6 @@ function App() {
 
   useEffect(() => {
     geolocate();
-    setSearchLocation(location);
   }, []);
 
   async function geolocate() {
@@ -57,6 +57,16 @@ function App() {
       lon: lon,
     });
 
+    if (!searchLocation.name) {
+      setSearchLocation({
+        country: country,
+        name: local_names.pl,
+        state: state,
+        lat: lat,
+        lon: lon,
+      });
+    }
+
     console.log("current location:", location);
   }
 
@@ -67,9 +77,14 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SearchAppBar searchLocation_name={searchLocation.name}>
-        <WeatherWidget location={location} />
+        <WeatherWidget
+          name={location.name}
+          country={location.country}
+          state={location.state}
+        />
       </SearchAppBar>
-      <header className="App-header">
+      <div className="App-header">
+        <Forecast searchLocation={searchLocation}></Forecast>
         <Button
           onClick={() => getCurrentWeather(location.lat, location.lon, apiKey)}
         >
@@ -109,7 +124,7 @@ function App() {
         >
           hisAir
         </Button>
-      </header>
+      </div>
     </ThemeProvider>
   );
 }

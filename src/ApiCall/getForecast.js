@@ -13,13 +13,12 @@ export default async function getForecast(lat, lon, appid, cnt, mode, units = "m
     units optional - Units of measurement. Celsius use units=metric and Fahrenheit use units=imperial are available. If you do not use the units parameter, Kelvin is used by default .
     lang optional - You can use this parameter to get the output in your language.
     */
-
-    const url = `api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${appid}${addParIfE(cnt, 'cnt')}${addParIfE(mode, 'mode')}${addParIfE(units, 'units')}${addParIfE(lang, 'lang')}`;
+    const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${appid}${addParIfE(cnt, 'cnt')}${addParIfE(mode, 'mode')}${addParIfE(units, 'units')}${addParIfE(lang, 'lang')}`;
 
     try {
         const response = await fetch(url);
         const result = await response.json();
-        //console.log(result);
+        console.log(result);
 
         return result;
     } catch (e) {

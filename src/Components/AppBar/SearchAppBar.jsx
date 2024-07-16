@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
@@ -47,7 +46,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar(props) {
-  const { searchLocation_name } = props;
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -64,7 +62,7 @@ export default function SearchAppBar(props) {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder={searchLocation_name}
+              placeholder={props.searchLocation_name}
               inputProps={{ "aria-label": "search" }}
             />
           </Search>

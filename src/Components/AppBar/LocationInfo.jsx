@@ -1,14 +1,14 @@
 import React from "react";
 import { Box, Divider, Typography } from "@mui/material";
 
-export default function LocationInfo({ location }) {
+export default function LocationInfo({ name, country, state }) {
   return (
     <Box sx={{ display: "inline-flex" }}>
-      <Typography>{location.name}</Typography>
+      <Typography>{name}</Typography>
       <Divider orientation="vertical" flexItem sx={{ marginX: "5px" }} />
-      <Typography>{location.country}</Typography>
+      <Typography>{country}</Typography>
       <Divider orientation="vertical" flexItem sx={{ marginX: "5px" }} />
-      <Typography>{location.state}</Typography>
+      <Typography>{state}</Typography>
     </Box>
   );
 }
