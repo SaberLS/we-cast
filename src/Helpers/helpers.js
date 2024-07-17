@@ -15,7 +15,7 @@ export function cnvtShiftUTC(shift) { //converts timme given in seconds to UTC o
     return "UTC" + offset;
 };
 
-export function cnvtUTC(UTC) {// src: https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
+export function cnvtUni(UTC) {// src: https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
     // Create a new JavaScript Date object based on the timestamp
     // multiplied by 1000 so that the argument is in milliseconds, not seconds
     const date = new Date(UTC * 1000);
@@ -32,3 +32,6 @@ export function cnvtUTC(UTC) {// src: https://stackoverflow.com/questions/847185
     // Will display time in 10:30:23 format
     return (hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2));
 }
+
+export const capitalFirstL = (str) => str[0].toUpperCase() + str.slice(1);
+export const cnvtMtoKM = (m) => m / 1000;

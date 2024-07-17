@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import getForecast from "../../ApiCall/getForecast";
 import { apiKey } from "../../apiKey";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, Divider } from "@mui/material";
-import { cnvtUTC, cnvtShiftUTC } from "../../Helpers/helpers";
+import { Divider, Grid } from "@mui/material";
+import {
+  cnvtUni,
+  cnvtShiftUTC,
+  capitalFirstL,
+  cnvtMtoKM,
+} from "../../Helpers/helpers";
+import Box from "@mui/material/Box";
+import { theme } from "../../Themes/theme";
 
 export default function Forecast({ searchLocation }) {
   const [forecast, setForecast] = useState({
@@ -38,32 +42,69 @@ export default function Forecast({ searchLocation }) {
   }
 
   return (
-    <Card sx={{ maxWidth: 500 }}>
-      <CardActionArea>
-        <Typography gutterBottom variant="h5" component="div">
-          {forecast.city.name}
-        </Typography>
-        <Typography gutterBottom component="div">
-          timezone: {cnvtShiftUTC(forecast.city.timezone)}
-          <Divider />
-          sunrise: {cnvtUTC(forecast.city.sunrise)}
-          <Divider />
-          sunset: {cnvtUTC(forecast.city.sunset)}
-          <Divider />
-        </Typography>
-        <CardMedia
-          component="img"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <Box>
+      {forecast.list[0] ? (
+        <Box>
+          <Box sx={{ display: "inline-flex" }}>
+            <Typography fontSize={"15px"}>
+              {forecast.list[0] ? forecast.list[0].dt_txt : null}
+            </Typography>
+            <Divider orientation="vertical" flexItem sx={{ marginX: "5px" }} />
+            <Typography fontSize={"15px"}>
+              {cnvtShiftUTC(forecast.city.timezone)}
+            </Typography>
+          </Box>
+          <Typography variant="h3">{forecast.city.name}</Typography>
+
+          <Box sx={{ display: "inline-flex" }}>
+            <Typography
+              variant="h4"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {Math.round(forecast.list[0].main.temp)}°C
+            </Typography>
+            <img
+              src={`https://openweathermap.org/img/wn/${forecast.list[0].weather[0].icon}@2x.png`}
+              alt="weather icon"
+            />
+          </Box>
+          <Box>
+            <Typography variant="h5">
+              {`Temperatura odczuwalna ${Math.round(
+                forecast.list[0].main.feels_like
+              )}°C. ${capitalFirstL(forecast.list[0].weather[0].description)}.`}
+            </Typography>
+          </Box>
+          <Grid
+            container
+            spacing={3}
+            sx={{
+              borderLeft: `2px solid ${theme.palette.primary.light}`,
+            }}
+          >
+            <Grid item xs="6">
+              <Typography variant="h6">{`zachmurzenie ${forecast.list[0].clouds.all}%`}</Typography>
+              <Typography variant="h6">{`ciśnienie ${forecast.list[0].main.pressure}hPa`}</Typography>
+              <Typography variant="h6">{`wilgotność ${forecast.list[0].main.humidity}%`}</Typography>
+            </Grid>
+            <Grid item xs="6">
+              <Typography variant="h6">{`widoczność ${cnvtMtoKM(
+                forecast.list[0].visibility
+              )}km`}</Typography>
+              <Typography variant="h6">{`wschód ${cnvtUni(
+                forecast.city.sunrise
+              )}`}</Typography>
+              <Typography variant="h6">{`zachód ${cnvtUni(
+                forecast.city.sunset
+              )}`}</Typography>
+            </Grid>
+          </Grid>
+        </Box>
+      ) : null}
+    </Box>
   );
 }

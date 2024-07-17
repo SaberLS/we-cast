@@ -55,6 +55,7 @@ export default function SearchAppBar(props) {
           <img
             src="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png"
             height="40px"
+            alt="logo of OpenWeather"
           />
 
           <Search>
