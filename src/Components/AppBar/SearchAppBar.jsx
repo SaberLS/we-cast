@@ -1,10 +1,12 @@
-import * as React from "react";
+import { React, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
+import getLocation from "../../ApiCall/getLocation";
+import { ninjaKey } from "../../apiKey";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -45,7 +47,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchAppBar(props) {
+export default function SearchAppBar({ searchLocation_name, children }) {
+  const [input, setInput] = useState();
+  const [result, setResult] = useState();
+
+  useEffect(() => {
+    fetchData();
+  }, [input]);
+
+  async function fetchData() {
+    const response = await getLocation(input, ninjaKey);
+    setResult(response);
+    console.log(response);
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -63,11 +78,14 @@ export default function SearchAppBar(props) {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder={props.searchLocation_name}
+              onInput={({ target }) => {
+                target.value && setInput(target.value); //setInput if target.value === true
+              }}
+              placeholder={searchLocation_name}
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          {props.children}
+          {children}
         </Toolbar>
       </AppBar>
     </Box>

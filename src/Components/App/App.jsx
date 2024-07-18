@@ -11,9 +11,16 @@ import {
   getHistoryAirPollution,
 } from "../../ApiCall/getAirPollution";
 import SearchAppBar from "../AppBar/SearchAppBar";
-import WeatherWidget from "../AppBar/LocationInfo";
+import LocationInfo from "../AppBar/LocationInfo";
 import getReverseGeocoding from "../../ApiCall/getReverseGeocoding";
-import Forecast from "../Forecast/Forecast";
+import ForecastTable from "../Forecast/ForecastTable";
+import Box from "@mui/material/Box";
+import WeatherWidget from "../WeatherWidget/WeatherWidget";
+import getForecast from "../../ApiCall/getForecast";
+
+function error() {
+  console.error("Unable to retrieve your location");
+}
 
 function App() {
   const [location, setLocation] = useState({
@@ -23,6 +30,13 @@ function App() {
     state: "",
     country: "",
   });
+  const [forecast, setForecast] = useState({
+    city: {
+      name: "",
+    },
+    list: [],
+  });
+  const [currentWeather, setCurrentWeather] = useState({});
   const [searchLocation, setSearchLocation] = useState(location);
 
   useEffect(() => {
@@ -45,13 +59,25 @@ function App() {
     const lon = position.coords.longitude;
 
     //console.log(`Latitude: ${lat}, Longitude: ${lon}`);
-    const result = await getReverseGeocoding(lat, lon, apiKey);
+    const geoCoding = await getReverseGeocoding(lat, lon, apiKey);
 
-    const { country, local_names, state } = result[0];
+    const weather = await getCurrentWeather(lat, lon, apiKey);
+    setCurrentWeather(weather);
 
+    const response = await getForecast(lat, lon, apiKey);
+
+    setForecast({
+      city: response.city,
+      list: response.list,
+    });
+
+    const { country, local_names, state } = geoCoding[0];
     setLocation({
       country: country,
-      name: local_names.pl,
+      name:
+        local_names.pl !== response.city.name
+          ? `${local_names.pl}/${response.city.name}`
+          : local_names.pl,
       state: state,
       lat: lat,
       lon: lon,
@@ -68,23 +94,24 @@ function App() {
     }
 
     console.log("current location:", location);
-  }
-
-  function error() {
-    console.error("Unable to retrieve your location");
+    console.log("current weather:", currentWeather);
+    console.log("forecast:", forecast);
   }
 
   return (
     <ThemeProvider theme={theme}>
       <SearchAppBar searchLocation_name={searchLocation.name}>
-        <WeatherWidget
+        <LocationInfo
           name={location.name}
           country={location.country}
           state={location.state}
         />
       </SearchAppBar>
-      <div className="App-header">
-        <Forecast searchLocation={searchLocation}></Forecast>
+      <Box className="App-header">
+        <WeatherWidget weather={currentWeather} />
+      </Box>
+      <Box className="App-body">
+        <ForecastTable list={forecast.list} />
         <Button
           onClick={() => getCurrentWeather(location.lat, location.lon, apiKey)}
         >
@@ -124,7 +151,7 @@ function App() {
         >
           hisAir
         </Button>
-      </div>
+      </Box>
     </ThemeProvider>
   );
 }
