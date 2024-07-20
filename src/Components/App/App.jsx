@@ -100,7 +100,10 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SearchAppBar searchLocation_name={searchLocation.name}>
+      <SearchAppBar
+        searchLocation={searchLocation}
+        setSearchLocation={setSearchLocation}
+      >
         <LocationInfo
           name={location.name}
           country={location.country}
@@ -108,7 +111,11 @@ function App() {
         />
       </SearchAppBar>
       <Box className="App-header">
-        <WeatherWidget weather={currentWeather} />
+        <WeatherWidget
+          weather={currentWeather}
+          setWeather={setCurrentWeather}
+          location={searchLocation}
+        />
       </Box>
       <Box className="App-body">
         <ForecastTable list={forecast.list} />

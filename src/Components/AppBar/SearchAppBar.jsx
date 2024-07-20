@@ -7,6 +7,7 @@ import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import getLocation from "../../ApiCall/getLocation";
 import { ninjaKey } from "../../apiKey";
+import Select from "./Select";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -47,20 +48,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchAppBar({ searchLocation_name, children }) {
-  const [input, setInput] = useState();
-  const [result, setResult] = useState();
-
-  useEffect(() => {
-    fetchData();
-  }, [input]);
-
-  async function fetchData() {
-    const response = await getLocation(input, ninjaKey);
-    setResult(response);
-    console.log(response);
-  }
-
+export default function SearchAppBar({
+  searchLocation,
+  setSearchLocation,
+  children,
+}) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -74,16 +66,7 @@ export default function SearchAppBar({ searchLocation_name, children }) {
           />
 
           <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              onInput={({ target }) => {
-                target.value && setInput(target.value); //setInput if target.value === true
-              }}
-              placeholder={searchLocation_name}
-              inputProps={{ "aria-label": "search" }}
-            />
+            <Select setSearchLocation={setSearchLocation} />
           </Search>
           {children}
         </Toolbar>

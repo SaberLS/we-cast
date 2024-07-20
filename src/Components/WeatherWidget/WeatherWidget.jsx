@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import { Grid } from "@mui/material";
 import {
@@ -9,8 +9,23 @@ import {
 } from "../../Helpers/helpers";
 import Box from "@mui/material/Box";
 import { theme } from "../../Themes/theme";
+import getCurrentWeather from "../../ApiCall/getCurrentWeather";
+import { apiKey } from "../../apiKey";
 
-export default function WeatherWidget({ weather }) {
+export default function WeatherWidget({ weather, setWeather, location }) {
+  useEffect(() => {
+    (async () => {
+      console.log("location:", location);
+      const result = await getCurrentWeather(
+        location.lat,
+        location.lon,
+        apiKey
+      );
+      setWeather(result);
+      console.log(weather);
+    })();
+  }, [location]);
+
   return (
     <Box>
       {weather.dt ? (
