@@ -9,7 +9,7 @@ export async function getCurrentAirPollution(lat, lon, appid) {
     try {
         const response = await fetch(url)
         const result = await response.json();
-        console.log(result);
+        //console.log(result);
 
         return result;
     } catch (e) {
@@ -28,7 +28,7 @@ export async function getForecastAirPollution(lat, lon, appid) {
     try {
         const response = await fetch(url)
         const result = await response.json();
-        console.log(result);
+        //console.log(result);
 
         return result;
     } catch (e) {
@@ -49,7 +49,7 @@ export async function getHistoryAirPollution(lat, lon, start, end, appid) {
     try {
         const response = await fetch(url)
         const result = await response.json();
-        console.log(result);
+        //console.log(result);
 
         return result;
     } catch (e) {

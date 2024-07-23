@@ -15,67 +15,72 @@ import { apiKey } from "../../apiKey";
 export default function WeatherWidget({ weather, setWeather, location }) {
   useEffect(() => {
     (async () => {
-      console.log("location:", location);
+      //console.log("location:", location);
       const result = await getCurrentWeather(
         location.lat,
         location.lon,
         apiKey
       );
       setWeather(result);
-      console.log(weather);
+      //console.log(weather);
     })();
   }, [location]);
 
   return (
-    <Box>
+    <Box
+      sx={{
+        borderBottom: `2px solid ${theme.palette.primary.light}`,
+      }}
+    >
       {weather.dt ? (
-        <Box>
-          <Typography fontSize={"15px"}>{cnvtUniDate(weather.dt)}</Typography>
-          <Typography variant="h3">{weather.name}</Typography>
+        <Box sx={{ width: "750px" }}>
+          <Box sx={{ marginLeft: "3px" }}>
+            <Typography fontSize={"15px"}>{cnvtUniDate(weather.dt)}</Typography>
+            <Typography variant="h3">{location.name}</Typography>
 
-          <Box sx={{ display: "inline-flex" }}>
-            <Typography
-              variant="h4"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {`${Math.round(weather.main.temp)}°C`}
-            </Typography>
-            <img
-              src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-              alt="weather icon"
-            />
-          </Box>
-          <Box>
+            <Box sx={{ display: "inline-flex" }}>
+              <Typography
+                variant="h4"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {`${Math.round(weather.main.temp)}°C`}
+              </Typography>
+              <img
+                src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                alt="weather icon"
+              />
+            </Box>
             <Typography variant="h5">
-              {`Temperatura odczuwalna ${Math.round(
+              {`Feels Like ${Math.round(
                 weather.main.feels_like
               )}°C. ${capitalFirstL(weather.weather[0].description)}.`}
             </Typography>
           </Box>
-          <Grid
-            container
-            spacing={3}
-            sx={{
-              borderLeft: `2px solid ${theme.palette.primary.light}`,
-            }}
-          >
+          <Grid container spacing={3}>
             <Grid item xs={6}>
-              <Typography variant="h6">{`zachmurzenie ${weather.clouds.all}%`}</Typography>
-              <Typography variant="h6">{`ciśnienie ${weather.main.pressure}hPa`}</Typography>
-              <Typography variant="h6">{`wilgotność ${weather.main.humidity}%`}</Typography>
+              <Box
+                sx={{
+                  borderLeft: `2px solid ${theme.palette.primary.light}`,
+                  paddingLeft: "5px",
+                }}
+              >
+                <Typography variant="h6">{`overcast ${weather.clouds.all}%`}</Typography>
+                <Typography variant="h6">{`pressure ${weather.main.pressure}hPa`}</Typography>
+                <Typography variant="h6">{`humidity ${weather.main.humidity}%`}</Typography>
+              </Box>
             </Grid>
             <Grid item xs={6}>
-              <Typography variant="h6">{`widoczność ${cnvtMtoKM(
+              <Typography variant="h6">{`visibility ${cnvtMtoKM(
                 weather.visibility
               )}km`}</Typography>
-              <Typography variant="h6">{`wschód ${cnvtUni(
+              <Typography variant="h6">{`sunrise ${cnvtUni(
                 weather.sys.sunrise
               )}`}</Typography>
-              <Typography variant="h6">{`zachód ${cnvtUni(
+              <Typography variant="h6">{`sunset ${cnvtUni(
                 weather.sys.sunset
               )}`}</Typography>
             </Grid>

@@ -1,6 +1,6 @@
 import { addParIfE } from "../Helpers/helpers";
 
-export default async function getCurrentWeather(lat, lon, appid, mode, units = 'metric', lang = 'pl') {
+export default async function getCurrentWeather(lat, lon, appid, mode, units = 'metric', lang = 'en') {
     /*
     lat	required - Latitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API
     lon	required - Longitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API
@@ -10,11 +10,10 @@ export default async function getCurrentWeather(lat, lon, appid, mode, units = '
     lang optional - You can use this parameter to get the output in your language.
     */
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appid}${addParIfE(mode, 'mode')}${addParIfE(units, 'units')}${addParIfE(lang, 'lang')}`;
-    console.log(url);
     try {
         const response = await fetch(url);
         const result = await response.json();
-        console.log(result);
+        //console.log(result);
 
         return result;
     } catch (e) {

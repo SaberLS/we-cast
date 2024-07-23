@@ -2,14 +2,9 @@ import "./App.css";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "../../Themes/theme";
 import { useState, useEffect } from "react";
-import { Button } from "@mui/material";
+import { Container } from "@mui/material";
 import getCurrentWeather from "../../ApiCall/getCurrentWeather";
 import { apiKey } from "../../apiKey";
-import {
-  getCurrentAirPollution,
-  getForecastAirPollution,
-  getHistoryAirPollution,
-} from "../../ApiCall/getAirPollution";
 import SearchAppBar from "../AppBar/SearchAppBar";
 import LocationInfo from "../AppBar/LocationInfo";
 import getReverseGeocoding from "../../ApiCall/getReverseGeocoding";
@@ -74,10 +69,7 @@ function App() {
     const { country, local_names, state } = geoCoding[0];
     setLocation({
       country: country,
-      name:
-        local_names.pl !== response.city.name
-          ? `${local_names.pl}/${response.city.name}`
-          : local_names.pl,
+      name: local_names.en,
       state: state,
       lat: lat,
       lon: lon,
@@ -86,79 +78,42 @@ function App() {
     if (!searchLocation.name) {
       setSearchLocation({
         country: country,
-        name: local_names.pl,
+        name: local_names.en,
         state: state,
         lat: lat,
         lon: lon,
       });
     }
 
-    console.log("current location:", location);
-    console.log("current weather:", currentWeather);
-    console.log("forecast:", forecast);
+    // console.log("current location:", location);
+    // console.log("current weather:", currentWeather);
+    // console.log("forecast:", forecast);
   }
 
   return (
     <ThemeProvider theme={theme}>
-      <SearchAppBar
-        searchLocation={searchLocation}
-        setSearchLocation={setSearchLocation}
-      >
-        <LocationInfo
-          name={location.name}
-          country={location.country}
-          state={location.state}
-        />
-      </SearchAppBar>
-      <Box className="App-header">
-        <WeatherWidget
-          weather={currentWeather}
-          setWeather={setCurrentWeather}
-          location={searchLocation}
-        />
-      </Box>
-      <Box className="App-body">
-        <ForecastTable list={forecast.list} />
-        <Button
-          onClick={() => getCurrentWeather(location.lat, location.lon, apiKey)}
+      <Container maxWidth={false} disableGutters>
+        <SearchAppBar
+          searchLocation={searchLocation}
+          setSearchLocation={setSearchLocation}
         >
-          getCurrentWeather
-        </Button>
-        <Button
-          onClick={() => {
-            geolocate();
-          }}
-        >
-          loc
-        </Button>
-        <Button
-          onClick={() =>
-            getCurrentAirPollution(location.lat, location.lon, apiKey)
-          }
-        >
-          curAir
-        </Button>
-        <Button
-          onClick={() =>
-            getForecastAirPollution(location.lat, location.lon, apiKey)
-          }
-        >
-          foreAir
-        </Button>
-        <Button
-          onClick={() =>
-            getHistoryAirPollution(
-              location.lat,
-              location.lon,
-              1606223802,
-              1606482999,
-              apiKey
-            )
-          }
-        >
-          hisAir
-        </Button>
-      </Box>
+          <LocationInfo
+            name={location.name}
+            country={location.country}
+            state={location.state}
+          />
+        </SearchAppBar>
+        <Box className="App-header">
+          <WeatherWidget
+            weather={currentWeather}
+            setWeather={setCurrentWeather}
+            location={searchLocation}
+          />
+        </Box>
+        <Box className="App-body">
+          <ForecastTable list={forecast.list} />
+        </Box>
+      </Container>
     </ThemeProvider>
   );
 }

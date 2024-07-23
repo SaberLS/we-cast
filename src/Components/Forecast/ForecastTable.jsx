@@ -14,14 +14,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     borderRadius: "0",
     backgroundColor: "#282c34",
     color: "white",
-    borderBottom: `2px solid ${theme.palette.primary.light}`,
     textAlign: "center",
+    borderBottom: `2px solid ${theme.palette.primary.light}`,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    borderBottom: `1px solid ${theme.palette.primary.light}`,
     color: "white",
     textAlign: "center",
+    borderBottom: `2px solid ${theme.palette.primary.light}`,
   },
 }));
 
@@ -31,6 +31,8 @@ export default function ForecastTable({ list }) {
       sx={{
         backgroundColor: "#282c34",
         width: "750px",
+        borderRadius: "0",
+        boxShadow: "0",
         borderLeft: `2px solid ${theme.palette.primary.light}`,
       }}
       component={Paper}
@@ -38,7 +40,7 @@ export default function ForecastTable({ list }) {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <StyledTableCell sx={{}}>Data</StyledTableCell>
+            <StyledTableCell>Data</StyledTableCell>
             <StyledTableCell>Temperatura&nbsp;(°C)</StyledTableCell>
             <StyledTableCell>Zachmurzenie&nbsp;(%)</StyledTableCell>
             <StyledTableCell>Ciśnienie&nbsp;(hPa)</StyledTableCell>
@@ -51,7 +53,9 @@ export default function ForecastTable({ list }) {
                 return (
                   <TableRow
                     key={dt}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                    }}
                   >
                     <StyledTableCell component="th" scope="row">
                       {dt_txt}

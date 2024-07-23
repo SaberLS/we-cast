@@ -1,7 +1,7 @@
 export const addParIfE = (par, parName) => par ? `&${parName}=${par}` : ''; //add Parameter If Exists
 
-/*
-export function cnvtShiftUTC(shift) { //converts timme given in seconds to UTC offset returns string in format: UTC[+/-]00
+
+export function cnvtShiftGMT(shift) { //converts timme given in seconds to GMT offset returns string in format: GMT[+/-]0000
     let offset = shift / 3600;//count seconds to hours
 
     //add 0 before offset if its shorter than 2 signs
@@ -13,9 +13,9 @@ export function cnvtShiftUTC(shift) { //converts timme given in seconds to UTC o
         offset = "-0" + (offset * -1);
     }
 
-    return "UTC" + offset;
+    return "GMT" + offset;
 };
-*/
+
 
 export function cnvtUni(uni) {// src: https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
     // Create a new JavaScript Date object based on the timestamp
@@ -41,6 +41,5 @@ export const cnvtMtoKM = (m) => m / 1000;
 export function cnvtUniDate(uni) {
     const date = new Date(uni * 1000);
 
-    console.log(date);
     return `${date}`
 } 

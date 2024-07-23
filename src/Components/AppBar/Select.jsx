@@ -1,32 +1,24 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import Box from "@mui/material/Box";
-import getLocation from "../../ApiCall/getLocation";
-import { ninjaKey } from "../../apiKey";
-import { Button } from "@mui/material";
+import { Typography } from "@mui/material";
+import openMeteoGeocode from "../../ApiCall/openMeteoGeocode";
 
-export default function Asynchronous({ setSearchLocation }) {
-  const [inputValue, setInputValue] = useState(null);
+export default function Asynchronous({ searchLocation, setSearchLocation }) {
+  const [inputValue, setInputValue] = useState("");
   const [value, setValue] = useState(null);
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    let active = true;
-
     if (inputValue === "") {
       setOptions(value ? [value] : []);
       return undefined;
     }
 
     (async () => {
-      const response = await getLocation(inputValue, ninjaKey);
-      setOptions(response);
+      const response = await openMeteoGeocode(inputValue);
+      response.results && setOptions(response.results);
     })();
-
-    return () => {
-      active = false;
-    };
   }, [value, inputValue]);
 
   return (
@@ -43,12 +35,14 @@ export default function Asynchronous({ setSearchLocation }) {
       value={value}
       noOptionsText="No locations"
       onChange={(event, newValue) => {
-        if (newValue.name) {
+        if (newValue) {
           setSearchLocation({
+            id: newValue.id,
             name: newValue.name,
             lon: newValue.longitude,
             lat: newValue.latitude,
-            country: newValue.country,
+            country: newValue.country_code,
+            admin: newValue.admin1,
           });
         }
         setOptions(newValue ? [newValue, ...options] : options);
@@ -66,15 +60,10 @@ export default function Asynchronous({ setSearchLocation }) {
         console.log(option);
 
         return (
-          <li key={key} {...optionProps}>
-            <Button
-              onClick={() => {
-                console.log("ss");
-              }}
-              component="span"
-            >
-              {option.name}
-            </Button>
+          <li key={option.id} {...optionProps}>
+            <Typography component="span">
+              {option.name}\{option.country_code}\{option.admin1}
+            </Typography>
           </li>
         );
       }}
