@@ -18,7 +18,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     borderBottom: `2px solid ${theme.palette.primary.light}`,
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: {md: 14, xs: 10},
     color: "white",
     textAlign: "center",
     borderBottom: `2px solid ${theme.palette.primary.light}`,
@@ -30,21 +30,21 @@ export default function ForecastTable({ list }) {
     <TableContainer
       sx={{
         backgroundColor: "#282c34",
-        width: "750px",
+        maxWidth: "750px",
         borderRadius: "0",
         boxShadow: "0",
-        borderLeft: `2px solid ${theme.palette.primary.light}`,
+        borderLeft: {md:`2px solid ${theme.palette.primary.light}`, sx: "none"},
       }}
       component={Paper}
     >
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Data</StyledTableCell>
-            <StyledTableCell>Temperatura&nbsp;(°C)</StyledTableCell>
-            <StyledTableCell>Zachmurzenie&nbsp;(%)</StyledTableCell>
-            <StyledTableCell>Ciśnienie&nbsp;(hPa)</StyledTableCell>
-            <StyledTableCell>Wilgotonść&nbsp;(%)</StyledTableCell>
+            <StyledTableCell>Date</StyledTableCell>
+            <StyledTableCell>Temperature&nbsp;(°C)</StyledTableCell>
+            <StyledTableCell>Overcast&nbsp;(%)</StyledTableCell>
+            <StyledTableCell>Pressure&nbsp;(hPa)</StyledTableCell>
+            <StyledTableCell>Humidity&nbsp;(%)</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

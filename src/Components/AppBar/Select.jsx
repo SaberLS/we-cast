@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import { Typography } from "@mui/material";
+import { ThemeProvider, Typography } from "@mui/material";
 import openMeteoGeocode from "../../ApiCall/openMeteoGeocode";
+import { createTheme } from "@mui/material";
 
-export default function Asynchronous({ searchLocation, setSearchLocation }) {
+
+export default function Asynchronous({ setSearchLocation }) {
   const [inputValue, setInputValue] = useState("");
   const [value, setValue] = useState(null);
   const [options, setOptions] = useState([]);
@@ -21,10 +23,20 @@ export default function Asynchronous({ searchLocation, setSearchLocation }) {
     })();
   }, [value, inputValue]);
 
+  const theme = createTheme({
+    palette: {text: {
+      primary: "#000",
+  },}
+  })
+
+
+
+
   return (
+    <ThemeProvider theme={theme}>
     <Autocomplete
       id="autocomplete"
-      sx={{ width: 300 }}
+      sx={{ width: {md: 300, xs: "100vw"} }}
       getOptionLabel={(option) => (option.name ? option.name : "")}
       filterOptions={(x) => x}
       options={options}
@@ -68,5 +80,6 @@ export default function Asynchronous({ searchLocation, setSearchLocation }) {
         );
       }}
     />
+    </ThemeProvider>
   );
 }

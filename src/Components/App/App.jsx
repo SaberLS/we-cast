@@ -12,6 +12,7 @@ import ForecastTable from "../Forecast/ForecastTable";
 import Box from "@mui/material/Box";
 import WeatherWidget from "../WeatherWidget/WeatherWidget";
 import getForecast from "../../ApiCall/getForecast";
+import { LineChart } from "@mui/x-charts/LineChart";
 
 function error() {
   console.error("Unable to retrieve your location");
@@ -90,9 +91,20 @@ function App() {
     // console.log("forecast:", forecast);
   }
 
+  useEffect(() => {
+    (async() => {
+      const response = await getForecast(searchLocation.lat, searchLocation.lon, apiKey);
+      setForecast({
+        city: response.city,
+        list: response.list,
+      });
+    })();
+  }, [searchLocation])
+
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth={false} disableGutters>
+        
         <SearchAppBar
           searchLocation={searchLocation}
           setSearchLocation={setSearchLocation}
@@ -110,11 +122,53 @@ function App() {
             location={searchLocation}
           />
         </Box>
+        
         <Box className="App-body">
+          {forecast.list ? (
+            <Box sx={{ height: {md:"50vh", xs: "70vh", sm: "65vh", lg: "50vh", xl: "50vh"}, width: {md:"80vw", xs: "100vw", sm: "100vw", lg: "80vw", xl: "80vw"}}}>
+        
+        <LineChart sx={{
+  }} 
+        xAxis={[
+          {
+            data: forecast.list.map((el) => {
+              return el.dt;
+            }),
+            valueFormatter: (el) => {
+              const date = new Date(el * 1000)
+              return `${date.getUTCHours()}:00 ${date.getUTCDate()}`}
+            ,
+            scaleType: "utc" ,
+            min: forecast.list[0] ? forecast.list[0].dt : 0,
+        }]}
+        series={[
+          {
+            id: "temp",
+            label: "temperature",
+            data: forecast.list.map((el) => {
+              return Math.round(el.main.temp);
+            }),
+            showMark: ({ index }) => index % 2 === 0,
+          },
+          {
+            id: "feelsLike",
+            label: "feels Like",
+            data: forecast.list.map((el) => {
+              return Math.round(el.main.feels_like);
+            }),
+            showMark: ({ index }) => index % 2 === 0,
+          },
+          
+        ]}
+      />
+      </Box>
+          ) : null}
           <ForecastTable list={forecast.list} />
         </Box>
+        
       </Container>
-    </ThemeProvider>
+      </ThemeProvider>
+    
   );
 }
 

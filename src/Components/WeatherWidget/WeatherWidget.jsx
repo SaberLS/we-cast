@@ -27,13 +27,9 @@ export default function WeatherWidget({ weather, setWeather, location }) {
   }, [location]);
 
   return (
-    <Box
-      sx={{
-        borderBottom: `2px solid ${theme.palette.primary.light}`,
-      }}
-    >
+    <Box>
       {weather.dt ? (
-        <Box sx={{ width: "750px" }}>
+        <Box>
           <Box sx={{ marginLeft: "3px" }}>
             <Typography fontSize={"15px"}>{cnvtUniDate(weather.dt)}</Typography>
             <Typography variant="h3">{location.name}</Typography>
@@ -49,10 +45,12 @@ export default function WeatherWidget({ weather, setWeather, location }) {
               >
                 {`${Math.round(weather.main.temp)}°C`}
               </Typography>
+              <Box>
               <img
                 src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                 alt="weather icon"
               />
+              </Box>
             </Box>
             <Typography variant="h5">
               {`Feels Like ${Math.round(
