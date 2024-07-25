@@ -1,39 +1,25 @@
 import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
 import { theme } from "../../Themes/theme";
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    borderRadius: "0",
-    backgroundColor: "#282c34",
-    color: "white",
-    textAlign: "center",
-    borderBottom: `2px solid ${theme.palette.primary.light}`,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: {md: 14, xs: 10},
-    color: "white",
-    textAlign: "center",
-    borderBottom: `2px solid ${theme.palette.primary.light}`,
-  },
-}));
+import { StyledTableCell } from "./StyledTableCell";
 
 export default function ForecastTable({ list }) {
   return (
     <TableContainer
       sx={{
-        backgroundColor: "#282c34",
+        backgroundColor: theme.palette.background.default,
         maxWidth: "750px",
         borderRadius: "0",
         boxShadow: "0",
-        borderLeft: {md:`2px solid ${theme.palette.primary.light}`, sx: "none"},
+        borderLeft: {
+          md: `2px solid ${theme.palette.primary.light}`,
+          sx: "none",
+        },
       }}
       component={Paper}
     >

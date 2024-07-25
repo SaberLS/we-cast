@@ -19,7 +19,7 @@ export const theme = createTheme({
             primary: "#fff",
         },
         background: {
-            default: "#282c34"
+            default: "#282c34",
         }
     }
 });
