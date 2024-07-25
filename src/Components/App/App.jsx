@@ -2,7 +2,7 @@ import "./App.css";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "../../Themes/theme";
 import { useState, useEffect } from "react";
-import { Container } from "@mui/material";
+import { Container, createTheme } from "@mui/material";
 import getCurrentWeather from "../../ApiCall/getCurrentWeather";
 import { apiKey } from "../../apiKey";
 import SearchAppBar from "../AppBar/SearchAppBar";
@@ -14,11 +14,14 @@ import WeatherWidget from "../WeatherWidget/WeatherWidget";
 import getForecast from "../../ApiCall/getForecast";
 import { LineChart } from "@mui/x-charts/LineChart";
 
+
+
 function error() {
   console.error("Unable to retrieve your location");
 }
 
 function App() {
+ 
   const [location, setLocation] = useState({
     lat: 0,
     lon: 0,
@@ -125,10 +128,11 @@ function App() {
         
         <Box className="App-body">
           {forecast.list ? (
-            <Box sx={{ height: {md:"50vh", xs: "70vh", sm: "65vh", lg: "50vh", xl: "50vh"}, width: {md:"80vw", xs: "100vw", sm: "100vw", lg: "80vw", xl: "80vw"}}}>
-        
-        <LineChart sx={{
-  }} 
+        <Box sx={{ height: {md:"50vh", xs: "70vh", sm: "65vh", lg: "50vh", xl: "50vh"}, width: {md:"80vw", xs: "100vw", sm: "100vw", lg: "80vw", xl: "80vw"}}}>
+        <LineChart
+        yAxis={[
+          { id: 'temperature', scaleType: 'linear' },
+        ]} 
         xAxis={[
           {
             data: forecast.list.map((el) => {
@@ -148,7 +152,7 @@ function App() {
             data: forecast.list.map((el) => {
               return Math.round(el.main.temp);
             }),
-            showMark: ({ index }) => index % 2 === 0,
+            showMark: false,
           },
           {
             id: "feelsLike",
@@ -156,19 +160,32 @@ function App() {
             data: forecast.list.map((el) => {
               return Math.round(el.main.feels_like);
             }),
-            showMark: ({ index }) => index % 2 === 0,
+            showMark: false,
           },
           
+          
         ]}
+        slotProps={{
+          popper: {
+            sx: {
+              '& .MuiChartsTooltip-root': {
+                '& .MuiTypography-root': {
+                  color: 'black',
+                },
+              },
+            },
+          },
+        }}
       />
+      
       </Box>
+      
           ) : null}
           <ForecastTable list={forecast.list} />
         </Box>
         
-      </Container>
+      </Container> 
       </ThemeProvider>
-    
   );
 }
 
