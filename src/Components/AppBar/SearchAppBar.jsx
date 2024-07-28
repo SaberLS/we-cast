@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import AppBar from "@mui/material/AppBar";
 import { Search } from "../AppBar/Search";
-import Select from "../AppBar/Select";
-import LocationInfo from "./LocationInfo";
+import Select from "../AppBar/Select.jsx";
+import LocationInfo from "./LocationInfo.jsx";
 
 export default function SearchAppBar({ setSearchLocation, location }) {
   return (

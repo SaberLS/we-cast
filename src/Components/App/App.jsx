@@ -12,9 +12,9 @@ import Box from "@mui/material/Box";
 //import Button from "@mui/material/Button";
 
 //components
-import SearchAppBar from "../AppBar/SearchAppBar";
-import ForecastTable from "../Forecast/ForecastTable";
-import WeatherWidget from "../WeatherWidget/WeatherWidget";
+import SearchAppBar from "../AppBar/SearchAppBar.jsx";
+import ForecastTable from "../Forecast/ForecastTable.jsx";
+import WeatherWidget from "../WeatherWidget/WeatherWidget.jsx";
 
 //API Calls
 import getForecast from "../../ApiCall/getForecast";
@@ -34,8 +34,9 @@ import {
 
 //IN MY CASE apiKey WAS IMPORTED FROM FILE WHICH GOT IGNORED TO KEEP MY KEY PRIVATE
 //YOU CAN GET API KEY HERE: https://openweathermap.org/api
-import { apiKey } from "../../apiKey";
-import Chart from "../Forecast/Chart";
+import { apiKey } from "../../apiKey.js";
+import Chart from "../Forecast/Chart/Chart.jsx";
+import { Button } from "@mui/material";
 
 function App() {
   const [location, setLocation] = useState(initLocation);
@@ -119,8 +120,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* Testing buttons
-      {<Button onClick={() => console.log("location:", location)}>
+      <Button onClick={() => console.log("location:", location)}>
         location
       </Button>
       <Button onClick={() => console.log("searchLocation:", searchLocation)}>
@@ -131,8 +131,7 @@ function App() {
       </Button>
       <Button onClick={() => console.log("currentWeather:", currentWeather)}>
         currentWeather
-      </Button>} 
-      */}
+      </Button>
 
       <Container maxWidth={false} disableGutters>
         <SearchAppBar
@@ -149,42 +148,54 @@ function App() {
         </Box>
 
         <Box className="App-body">
-          <Box
-            sx={{
-              height: {
-                xs: "70vh",
-                sm: "65vh",
-                md: "50vh",
-                lg: "50vh",
-                xl: "50vh",
-              },
-              width: {
-                xs: "100vw",
-                sm: "100vw",
-                md: "80vw",
-                lg: "80vw",
-                xl: "80vw",
-              },
-            }}
-          >
-            <Chart
-              xData={forecast.list.map((el) => {
-                return el.dt;
-              })}
-              series={[
+          <Box>
+            <Chart 
+              xData={
+                forecast.list.map((el) => (el.dt * 1000))
+              }
+
+              valueFormatter={
+                (el) => {
+                  const date = new Date(el);
+                  return `${date.getUTCHours()}:00\n${date.getUTCDate()}-${date.getUTCMonth()+1}`;
+                }
+              }
+
+              topSeries={[
                 {
                   id: "temp",
                   label: "temperature",
+                  showMark: false,
                   data: forecast.list.map((el) => {
                     return Math.round(el.main.temp);
                   }),
                 },
                 {
                   id: "feelsLike",
-                  label: "feels Like",
+                  label: "feels like",
                   data: forecast.list.map((el) => {
                     return Math.round(el.main.feels_like);
                   }),
+                  showMark: false,
+                },
+              ]}
+
+              bottomSeries={[
+                {
+                  id: "rain",
+                  label: "rain in mm",
+                  data: forecast.list.map((el) => {
+                    return el.rain ? el.rain["3h"] : 0;
+                  }),
+                  showMark: false,
+                },
+                {
+                  id: "snow",
+                  label: "snow in mm",
+                  data: forecast.list.map((el) => {
+                    return el.snow ? el.snow["3h"] : 0;
+                  }),
+                  showMark: false,
                 },
               ]}
             />

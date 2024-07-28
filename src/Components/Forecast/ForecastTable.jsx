@@ -13,7 +13,13 @@ export default function ForecastTable({ list }) {
     <TableContainer
       sx={{
         backgroundColor: theme.palette.background.default,
-        maxWidth: "750px",
+        width: {
+          xs: "95vw",
+          sm: "95vw",
+          md: "80vw",
+          lg: "80vw",
+          xl: "80vw",
+        },
         borderRadius: "0",
         boxShadow: "0",
         borderLeft: {
@@ -36,23 +42,23 @@ export default function ForecastTable({ list }) {
         <TableBody>
           {list
             ? list.map(({ main, dt, dt_txt, clouds }) => {
-                return (
-                  <TableRow
-                    key={dt}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <StyledTableCell component="th" scope="row">
-                      {dt_txt}
-                    </StyledTableCell>
-                    <StyledTableCell>{Math.round(main.temp)}</StyledTableCell>
-                    <StyledTableCell>{clouds.all}</StyledTableCell>
-                    <StyledTableCell>{main.pressure}</StyledTableCell>
-                    <StyledTableCell>{main.humidity}</StyledTableCell>
-                  </TableRow>
-                );
-              })
+              return (
+                <TableRow
+                  key={dt}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                  }}
+                >
+                  <StyledTableCell component="th" scope="row">
+                    {dt_txt}
+                  </StyledTableCell>
+                  <StyledTableCell>{Math.round(main.temp)}</StyledTableCell>
+                  <StyledTableCell>{clouds.all}</StyledTableCell>
+                  <StyledTableCell>{main.pressure}</StyledTableCell>
+                  <StyledTableCell>{main.humidity}</StyledTableCell>
+                </TableRow>
+              );
+            })
             : null}
         </TableBody>
       </Table>

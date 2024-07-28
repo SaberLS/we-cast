@@ -1,60 +1,60 @@
 export async function getCurrentAirPollution(lat, lon, appid) {
-    /*
+  /*
     lat	required - Latitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API
     lon	required - Longitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API
     appid required - Your unique API key
     */
-    const url = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${appid}`;
+  const url = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${appid}`;
 
-    try {
-        const response = await fetch(url)
-        const result = await response.json();
-        //console.log(result);
+  try {
+    const response = await fetch(url)
+    const result = await response.json();
+    //console.log(result);
 
-        return result;
-    } catch (e) {
-        console.error("getAirPollution() error:", e)
-    }
+    return result;
+  } catch (e) {
+    console.error("getAirPollution() error:", e)
+  }
 }
 
 export async function getForecastAirPollution(lat, lon, appid) {
-    /*
+  /*
     lat	required - Latitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API
     lon	required - Longitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API
     appid required - Your unique API key
     */
-    const url = `http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lon}&appid=${appid}`;
+  const url = `http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lon}&appid=${appid}`;
 
-    try {
-        const response = await fetch(url)
-        const result = await response.json();
-        //console.log(result);
+  try {
+    const response = await fetch(url)
+    const result = await response.json();
+    //console.log(result);
 
-        return result;
-    } catch (e) {
-        console.error("getForecastAirPollution() error:", e)
-    }
+    return result;
+  } catch (e) {
+    console.error("getForecastAirPollution() error:", e)
+  }
 }
 
 export async function getHistoryAirPollution(lat, lon, start, end, appid) {
-    /*
+  /*
     lat	required - Latitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API
     lon	required - Longitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API
     start required - Start date (unix time, UTC time zone), e.g. start=1606488670
     end	required - End date (unix time, UTC time zone), e.g. end=1606747870
     appid required - Your unique API key
     */
-    const url = `http://api.openweathermap.org/data/2.5/air_pollution/history?lat=${lat}&lon=${lon}&start=${start}&end=${end}&appid=${appid}`;
+  const url = `http://api.openweathermap.org/data/2.5/air_pollution/history?lat=${lat}&lon=${lon}&start=${start}&end=${end}&appid=${appid}`;
 
-    try {
-        const response = await fetch(url)
-        const result = await response.json();
-        //console.log(result);
+  try {
+    const response = await fetch(url)
+    const result = await response.json();
+    //console.log(result);
 
-        return result;
-    } catch (e) {
-        console.error("getHistoryAirPollution() error:", e)
-    }
+    return result;
+  } catch (e) {
+    console.error("getHistoryAirPollution() error:", e)
+  }
 }
 
 

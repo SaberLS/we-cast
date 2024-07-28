@@ -42,7 +42,17 @@ export default function WeatherWidget({ weather, location }) {
                 weather.main.feels_like
               )}°C. ${capitalFirstL(weather.weather[0].description)}.`}
             </Typography>
+            <Typography variant="h5">
+              {weather.rain ? Object.keys(weather.rain).map(time => {
+                return `Rain in ${time} ${weather.rain[time]}mm.`
+              }) : null}
+              {weather.snow ? Object.keys(weather.snow).map(time => {
+                return `Snow in ${time} ${weather.snow[time]}mm.`
+              }) : null}
+            </Typography>
+            
           </Box>
+          
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <Box

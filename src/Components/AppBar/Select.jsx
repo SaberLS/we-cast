@@ -5,7 +5,7 @@ import { ThemeProvider, Typography } from "@mui/material";
 import openMeteoGeocode from "../../ApiCall/openMeteoGeocode";
 import { createTheme } from "@mui/material";
 
-export default function Asynchronous({ setSearchLocation }) {
+export default function Select({ setSearchLocation }) {
   const [inputValue, setInputValue] = useState("");
   const [value, setValue] = useState(null);
   const [options, setOptions] = useState([]);
@@ -34,7 +34,7 @@ export default function Asynchronous({ setSearchLocation }) {
     <ThemeProvider theme={theme}>
       <Autocomplete
         id="autocomplete"
-        sx={{ width: { md: 300, xs: "100vw" } }}
+        sx={{ width: { md: 300, xs: "95vw" } }}
         getOptionLabel={(option) => (option.name ? option.name : "")}
         filterOptions={(x) => x}
         options={options}
@@ -64,7 +64,7 @@ export default function Asynchronous({ setSearchLocation }) {
           <TextField {...params} label="location" fullWidth />
         )}
         renderOption={(props, option) => {
-          const { key, ...optionProps } = props;
+          const { ...optionProps } = props;
           return (
             <li key={option.id} {...optionProps}>
               <Typography component="span">
