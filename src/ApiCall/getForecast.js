@@ -1,9 +1,17 @@
-//You can search weather forecast for 5 days with data every 3 hours by geographic coordinates.
-//All weather data can be obtained in JSON and XML formats.
+// You can search weather forecast for 5 days with data every 3 hours by geographic coordinates.
+// All weather data can be obtained in JSON and XML formats.
 
-import { addParIfE } from "../Helpers/helpers";
+import { addParIfE } from '../Helpers/helpers';
 
-export default async function getForecast(lat, lon, appid, cnt, mode, units = "metric", lang = "PL") {
+export default async function getForecast(
+  lat,
+  lon,
+  appid,
+  cnt,
+  mode,
+  units = 'metric',
+  lang = 'PL',
+) {
   /*
     lat	required - Latitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API
     lon	required - Longitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API
@@ -13,7 +21,7 @@ export default async function getForecast(lat, lon, appid, cnt, mode, units = "m
     units optional - Units of measurement. Celsius use units=metric and Fahrenheit use units=imperial are available. If you do not use the units parameter, Kelvin is used by default .
     lang optional - You can use this parameter to get the output in your language.
     */
-  const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${appid}${addParIfE(cnt, "cnt")}${addParIfE(mode, "mode")}${addParIfE(units, "units")}${addParIfE(lang, "lang")}`;
+  const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${appid}${addParIfE(cnt, 'cnt')}${addParIfE(mode, 'mode')}${addParIfE(units, 'units')}${addParIfE(lang, 'lang')}`;
 
   try {
     const response = await fetch(url);
@@ -22,7 +30,7 @@ export default async function getForecast(lat, lon, appid, cnt, mode, units = "m
 
     return result;
   } catch (e) {
-    console.error("getForecast() error:", e);
+    console.error('getForecast() error:', e);
   }
 }
 

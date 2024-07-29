@@ -1,12 +1,12 @@
-import React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { theme } from "../../Themes/theme";
-import { StyledTableCell } from "./StyledTableCell";
+import React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { theme } from '../../Themes/theme';
+import { StyledTableCell } from './StyledTableCell';
 
 export default function ForecastTable({ list }) {
   return (
@@ -14,17 +14,17 @@ export default function ForecastTable({ list }) {
       sx={{
         backgroundColor: theme.palette.background.default,
         width: {
-          xs: "95vw",
-          sm: "95vw",
-          md: "80vw",
-          lg: "80vw",
-          xl: "80vw",
+          xs: '95vw',
+          sm: '95vw',
+          md: '80vw',
+          lg: '80vw',
+          xl: '80vw',
         },
-        borderRadius: "0",
-        boxShadow: "0",
+        borderRadius: '0',
+        boxShadow: '0',
         borderLeft: {
           md: `2px solid ${theme.palette.primary.light}`,
-          sx: "none",
+          sx: 'none',
         },
       }}
       component={Paper}
@@ -41,12 +41,11 @@ export default function ForecastTable({ list }) {
         </TableHead>
         <TableBody>
           {list
-            ? list.map(({ main, dt, dt_txt, clouds }) => {
-              return (
+            ? list.map(({ main, dt, dt_txt, clouds }) => (
                 <TableRow
                   key={dt}
                   sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
+                    '&:last-child td, &:last-child th': { border: 0 },
                   }}
                 >
                   <StyledTableCell component="th" scope="row">
@@ -57,8 +56,7 @@ export default function ForecastTable({ list }) {
                   <StyledTableCell>{main.pressure}</StyledTableCell>
                   <StyledTableCell>{main.humidity}</StyledTableCell>
                 </TableRow>
-              );
-            })
+              ))
             : null}
         </TableBody>
       </Table>

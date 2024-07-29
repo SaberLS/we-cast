@@ -9,7 +9,7 @@ export default async function getGeocoding(zip, countryCode, appid) {
   try {
     const response = await fetch(url);
     const result = await response.json();
-    //console.log(result);
+    // console.log(result);
     /* 
         zip - Specified zip/post code in the API request
         name - Name of the found area
@@ -20,6 +20,6 @@ export default async function getGeocoding(zip, countryCode, appid) {
 
     return result;
   } catch (e) {
-    console.error("getGeocoding() error:", e)
+    console.error('getGeocoding() error:', e);
   }
 }

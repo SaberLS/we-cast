@@ -7,13 +7,13 @@ export async function getCurrentAirPollution(lat, lon, appid) {
   const url = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${appid}`;
 
   try {
-    const response = await fetch(url)
+    const response = await fetch(url);
     const result = await response.json();
-    //console.log(result);
+    // console.log(result);
 
     return result;
   } catch (e) {
-    console.error("getAirPollution() error:", e)
+    console.error('getAirPollution() error:', e);
   }
 }
 
@@ -26,13 +26,13 @@ export async function getForecastAirPollution(lat, lon, appid) {
   const url = `http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lon}&appid=${appid}`;
 
   try {
-    const response = await fetch(url)
+    const response = await fetch(url);
     const result = await response.json();
-    //console.log(result);
+    // console.log(result);
 
     return result;
   } catch (e) {
-    console.error("getForecastAirPollution() error:", e)
+    console.error('getForecastAirPollution() error:', e);
   }
 }
 
@@ -47,16 +47,15 @@ export async function getHistoryAirPollution(lat, lon, start, end, appid) {
   const url = `http://api.openweathermap.org/data/2.5/air_pollution/history?lat=${lat}&lon=${lon}&start=${start}&end=${end}&appid=${appid}`;
 
   try {
-    const response = await fetch(url)
+    const response = await fetch(url);
     const result = await response.json();
-    //console.log(result);
+    // console.log(result);
 
     return result;
   } catch (e) {
-    console.error("getHistoryAirPollution() error:", e)
+    console.error('getHistoryAirPollution() error:', e);
   }
 }
-
 
 /*
 coord Coordinates from the specified location (latitude, longitude)

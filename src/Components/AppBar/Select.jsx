@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import { ThemeProvider, Typography } from "@mui/material";
-import openMeteoGeocode from "../../ApiCall/openMeteoGeocode";
-import { createTheme } from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import { ThemeProvider, Typography, createTheme } from '@mui/material';
+import openMeteoGeocode from '../../ApiCall/openMeteoGeocode';
 
 export default function Select({ setSearchLocation }) {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [value, setValue] = useState(null);
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    if (inputValue === "") {
+    if (inputValue === '') {
       setOptions(value ? [value] : []);
       return undefined;
     }
@@ -25,7 +24,7 @@ export default function Select({ setSearchLocation }) {
   const theme = createTheme({
     palette: {
       text: {
-        primary: "#000",
+        primary: '#000',
       },
     },
   });
@@ -34,14 +33,15 @@ export default function Select({ setSearchLocation }) {
     <ThemeProvider theme={theme}>
       <Autocomplete
         id="autocomplete"
-        sx={{ width: { md: 300, xs: "95vw" } }}
-        getOptionLabel={(option) => (option.name ? option.name : "")}
+        sx={{ width: { md: 300, xs: '95vw' } }}
+        getOptionLabel={(option) => (option ? `${option.name}` : '')}
         filterOptions={(x) => x}
         options={options}
         autoComplete
         includeInputInList
         filterSelectedOptions
-        isOptionEqualToValue={(option, value) => (option.name = value.name)}
+        // eslint-disable-next-line no-shadow
+        isOptionEqualToValue={(option, value) => option.name === value.name}
         value={value}
         noOptionsText="No locations"
         onChange={(event, newValue) => {
@@ -65,6 +65,7 @@ export default function Select({ setSearchLocation }) {
         )}
         renderOption={(props, option) => {
           const { ...optionProps } = props;
+
           return (
             <li key={option.id} {...optionProps}>
               <Typography component="span">

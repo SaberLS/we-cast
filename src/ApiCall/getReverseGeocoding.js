@@ -1,4 +1,4 @@
-import { addParIfE } from "../Helpers/helpers";
+import { addParIfE } from '../Helpers/helpers';
 
 export default async function getReverseGeocoding(lat, lon, appid, limit) {
   /*
@@ -6,12 +6,12 @@ export default async function getReverseGeocoding(lat, lon, appid, limit) {
     appid - required - Your unique API key (you can always find it on your account page under the "API key" tab)
     limit optional - Number of the location names in the API response (several results can be returned in the API response)
     */
-  const url = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}${addParIfE(limit, "limit")}&appid=${appid}`;
+  const url = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}${addParIfE(limit, 'limit')}&appid=${appid}`;
 
   try {
     const response = await fetch(url);
     const result = await response.json();
-    //console.log(result);
+    // console.log(result);
     /* 
             name Name of the found location
             local_names
@@ -26,7 +26,7 @@ export default async function getReverseGeocoding(lat, lon, appid, limit) {
 
     return result;
   } catch (e) {
-    console.error("getReverseGeocoding() error:", e)
+    console.error('getReverseGeocoding() error:', e);
     return [];
   }
 }

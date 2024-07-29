@@ -1,10 +1,10 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import AppBar from "@mui/material/AppBar";
-import { Search } from "../AppBar/Search";
-import Select from "../AppBar/Select.jsx";
-import LocationInfo from "./LocationInfo.jsx";
+import React from 'react';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import AppBar from '@mui/material/AppBar';
+import { Search } from './Search';
+import Select from './Select.jsx';
+import LocationInfo from './LocationInfo.jsx';
 
 export default function SearchAppBar({ setSearchLocation, location }) {
   return (
@@ -12,9 +12,9 @@ export default function SearchAppBar({ setSearchLocation, location }) {
       <AppBar sx={{}} position="static">
         <Toolbar
           sx={{
-            display: { md: "inline-flex", xs: "flex" },
-            flexDirection: { md: "row", xs: "column" },
-            justifyContent: "space-between",
+            display: { md: 'inline-flex', xs: 'flex' },
+            flexDirection: { md: 'row', xs: 'column' },
+            justifyContent: 'space-between',
           }}
         >
           <img

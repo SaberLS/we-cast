@@ -1,31 +1,31 @@
-import React from "react";
-import Typography from "@mui/material/Typography";
-import { Grid } from "@mui/material";
+import React from 'react';
+import Typography from '@mui/material/Typography';
+import { Grid } from '@mui/material';
+import Box from '@mui/material/Box';
 import {
   cnvtUni,
   cnvtUniDate,
   capitalFirstL,
   cnvtMtoKM,
-} from "../../Helpers/helpers";
-import Box from "@mui/material/Box";
-import { theme } from "../../Themes/theme";
+} from '../../Helpers/helpers';
+import { theme } from '../../Themes/theme';
 
 export default function WeatherWidget({ weather, location }) {
   return (
     <Box>
       {weather.dt ? (
         <Box>
-          <Box sx={{ marginLeft: "3px" }}>
-            <Typography fontSize={"15px"}>{cnvtUniDate(weather.dt)}</Typography>
+          <Box sx={{ marginLeft: '3px' }}>
+            <Typography fontSize="15px">{cnvtUniDate(weather.dt)}</Typography>
             <Typography variant="h3">{location.name}</Typography>
 
-            <Box sx={{ display: "inline-flex" }}>
+            <Box sx={{ display: 'inline-flex' }}>
               <Typography
                 variant="h4"
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
                 {`${Math.round(weather.main.temp)}°C`}
@@ -39,26 +39,29 @@ export default function WeatherWidget({ weather, location }) {
             </Box>
             <Typography variant="h5">
               {`Feels Like ${Math.round(
-                weather.main.feels_like
+                weather.main.feels_like,
               )}°C. ${capitalFirstL(weather.weather[0].description)}.`}
             </Typography>
             <Typography variant="h5">
-              {weather.rain ? Object.keys(weather.rain).map(time => {
-                return `Rain in ${time} ${weather.rain[time]}mm.`
-              }) : null}
-              {weather.snow ? Object.keys(weather.snow).map(time => {
-                return `Snow in ${time} ${weather.snow[time]}mm.`
-              }) : null}
+              {weather.rain
+                ? Object.keys(weather.rain).map(
+                    (time) => `Rain in ${time} ${weather.rain[time]}mm.`,
+                  )
+                : null}
+              {weather.snow
+                ? Object.keys(weather.snow).map(
+                    (time) => `Snow in ${time} ${weather.snow[time]}mm.`,
+                  )
+                : null}
             </Typography>
-            
           </Box>
-          
+
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <Box
                 sx={{
                   borderLeft: `2px solid ${theme.palette.primary.light}`,
-                  paddingLeft: "5px",
+                  paddingLeft: '5px',
                 }}
               >
                 <Typography variant="h6">{`overcast ${weather.clouds.all}%`}</Typography>
@@ -68,13 +71,13 @@ export default function WeatherWidget({ weather, location }) {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h6">{`visibility ${cnvtMtoKM(
-                weather.visibility
+                weather.visibility,
               )}km`}</Typography>
               <Typography variant="h6">{`sunrise ${cnvtUni(
-                weather.sys.sunrise
+                weather.sys.sunrise,
               )}`}</Typography>
               <Typography variant="h6">{`sunset ${cnvtUni(
-                weather.sys.sunset
+                weather.sys.sunset,
               )}`}</Typography>
             </Grid>
           </Grid>
