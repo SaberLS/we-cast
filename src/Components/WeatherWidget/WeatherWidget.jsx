@@ -55,12 +55,12 @@ export default function WeatherWidget({ weather, location }) {
                 />
               </Box>
             </Box>
-            <Typography /* Feels Like */ variant="h5">
+            <Typography /* Weather Description */ variant="h5">
               {`Feels Like ${Math.round(
                 weather.main.feels_like,
               )}°C. ${capitalFirstL(weather.weather[0].description)}.`}
             </Typography>
-            <Typography /* Weather Description */ variant="h5">
+            <Typography /* Precipitation */ variant="h5">
               {weather.rain
                 ? Object.keys(weather.rain).map(
                     (time) => `Rain in ${time} ${weather.rain[time]}mm.`,

@@ -17,7 +17,7 @@ export default function SearchAppBar({ setSearchLocation, location }) {
             justifyContent: 'space-between',
           }}
         >
-          <Box
+          <Box // Logo
             sx={{
               width: '100%',
               display: 'flex',
@@ -33,7 +33,7 @@ export default function SearchAppBar({ setSearchLocation, location }) {
             </Link>
           </Box>
 
-          <Box
+          <Box // Search Bar
             sx={{
               width: '100%',
             }}
@@ -43,7 +43,7 @@ export default function SearchAppBar({ setSearchLocation, location }) {
             </Search>
           </Box>
 
-          <Box
+          <Box // Location Info
             sx={{
               width: '100%',
             }}
