@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { ThemeProvider, Typography, createTheme } from '@mui/material';
-import openMeteoGeocode from '../../ApiCall/openMeteoGeocode';
+import getGeocoding from '../../ApiCall/getGeocoding';
+import { apiKey } from '../../apiKey';
 
 export default function Select({ setSearchLocation }) {
   const [inputValue, setInputValue] = useState('');
@@ -10,14 +11,17 @@ export default function Select({ setSearchLocation }) {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
+    // Fetch autocomplete options as the user types in the input field
+
     if (inputValue === '') {
       setOptions(value ? [value] : []);
       return undefined;
     }
 
     (async () => {
-      const response = await openMeteoGeocode(inputValue);
-      response.results && setOptions(response.results);
+      const response = await getGeocoding(apiKey, inputValue);
+
+      response && setOptions(response);
     })();
   }, [value, inputValue]);
 
@@ -33,43 +37,51 @@ export default function Select({ setSearchLocation }) {
     <ThemeProvider theme={theme}>
       <Autocomplete
         id="autocomplete"
-        sx={{ width: { md: 300, xs: '95vw' } }}
-        getOptionLabel={(option) => (option ? `${option.name}` : '')}
+        getOptionLabel={(option) =>
+          option
+            ? `${option.name}${option.country ? `/${option.country}` : ''}${option.state ? `/${option.state}` : ''}`
+            : ''
+        }
         filterOptions={(x) => x}
         options={options}
         autoComplete
         includeInputInList
         filterSelectedOptions
         // eslint-disable-next-line no-shadow
-        isOptionEqualToValue={(option, value) => option.name === value.name}
+        isOptionEqualToValue={(option, value) => option === value} // true to filter options based on input value
         value={value}
         noOptionsText="No locations"
         onChange={(event, newValue) => {
+          // update searchLocation and options
           if (newValue) {
             setSearchLocation({
-              country: newValue.country_code,
+              country: newValue.country,
               name: newValue.name,
-              admin: newValue.admin1,
-              lon: newValue.longitude,
-              lat: newValue.latitude,
+              admin: newValue.state,
+              lon: newValue.lon,
+              lat: newValue.lat,
             });
           }
           setOptions(newValue ? [newValue, ...options] : options);
           setValue(newValue);
         }}
         onInputChange={(event, newInputValue) => {
+          // update inputValue and options
           setInputValue(newInputValue);
         }}
         renderInput={(params) => (
+          // render the input field
           <TextField {...params} label="location" fullWidth />
         )}
         renderOption={(props, option) => {
+          // display options in the dropdown menu
+          // render the autocomplete options with country, state and name
           const { ...optionProps } = props;
 
           return (
-            <li key={option.id} {...optionProps}>
+            <li {...optionProps} key={`${option.lon},${option.len}`}>
               <Typography component="span">
-                {option.name}\{option.country_code}\{option.admin1}
+                {option.name}/{option.country}/{option.state}
               </Typography>
             </li>
           );

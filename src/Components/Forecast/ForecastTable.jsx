@@ -26,6 +26,7 @@ export default function ForecastTable({ list }) {
           md: `2px solid ${theme.palette.primary.light}`,
           sx: 'none',
         },
+        overflowX: 'scroll',
       }}
       component={Paper}
     >

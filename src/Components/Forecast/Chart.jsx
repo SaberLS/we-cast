@@ -1,7 +1,7 @@
 import React from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
-import { Box, Grid, Typography } from '@mui/material';
-import useScreenSize from '../../../Helpers/useScreenSize';
+import { Box } from '@mui/material';
+import { theme } from '../../Themes/theme';
 
 export default function Chart({
   xData,
@@ -9,15 +9,12 @@ export default function Chart({
   topSeries,
   bottomSeries,
 }) {
-  const screenSize = useScreenSize();
-
   const xAxis = [
     {
       data: xData,
       valueFormatter,
       scaleType: 'utc',
       min: xData[0] ? xData[0] : 0,
-      tickInterval: [],
     },
   ];
 
@@ -26,6 +23,13 @@ export default function Chart({
       sx={{
         height: '100vh',
         width: '90vw',
+        '& .MuiChartsAxis-line': {
+          stroke: theme.palette.primary.main,
+        },
+
+        '& .MuiChartsAxis-tick': {
+          stroke: theme.palette.primary.main,
+        },
       }}
     >
       <Box
@@ -36,17 +40,9 @@ export default function Chart({
       >
         <LineChart
           margin={{
-            bottom: 10,
-            left: 30,
-            right: 0,
-          }}
-          sx={{
-            '& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel': {
-              display: 'none',
-            },
-            '& .MuiLineElement-root': {
-              width: '80px',
-            },
+            bottom: 40,
+            left: 40,
+            right: 30,
           }}
           xAxis={xAxis}
           series={topSeries}
@@ -59,6 +55,7 @@ export default function Chart({
             popper: {
               sx: {
                 '& .MuiChartsTooltip-root': {
+                  backgroundColor: theme.palette.primary.main,
                   '& .MuiTypography-root': {
                     color: 'black',
                   },
@@ -68,38 +65,6 @@ export default function Chart({
           }}
         />
       </Box>
-      <Grid
-        container
-        direction="row"
-        columns={20}
-        sx={{
-          width: '100%',
-          paddingLeft: '30px',
-          paddingRight: 0,
-        }}
-      >
-        {xData.map((data, i) => {
-          const date = new Date(data);
-          return i % 2 ? (
-            <Grid key={i} item xs={1}>
-              <Box
-                sx={{
-                  paddingY: '15px',
-                  marginY: '-15px',
-                  borderLeft: '1px solid black',
-                }}
-              >
-                <Typography sx={{ textAlign: 'center' }}>
-                  {`${date.getUTCHours()}:00`}
-                </Typography>
-                <Typography
-                  sx={{ textAlign: 'center' }}
-                >{`${date.getUTCDate()}-${date.getUTCMonth() + 1}`}</Typography>
-              </Box>
-            </Grid>
-          ) : null;
-        })}
-      </Grid>
       <Box
         sx={{
           height: '45%',
@@ -108,9 +73,9 @@ export default function Chart({
       >
         <LineChart
           margin={{
-            top: 10,
-            left: 30,
-            right: 0,
+            top: 5,
+            left: 40,
+            right: 30,
           }}
           yAxis={[{ reverse: true }]}
           xAxis={xAxis}
@@ -121,9 +86,11 @@ export default function Chart({
               position: { vertical: 'bottom', horizontal: 'middle' },
               padding: 0,
             },
+            //
             popper: {
               sx: {
                 '& .MuiChartsTooltip-root': {
+                  backgroundColor: theme.palette.primary.main,
                   '& .MuiTypography-root': {
                     color: 'black',
                   },
@@ -134,7 +101,8 @@ export default function Chart({
           bottomAxis={null}
           topAxis={{}}
           sx={{
-            '& .MuiChartsAxis-top .MuiChartsAxis-tickLabel': {
+            // Disable top tick labels
+            '& .MuiChartsAxis-top .MuiChartsAxis-labelTick': {
               display: 'none',
             },
           }}

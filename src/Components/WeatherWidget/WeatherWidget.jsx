@@ -12,14 +12,32 @@ import { theme } from '../../Themes/theme';
 
 export default function WeatherWidget({ weather, location }) {
   return (
-    <Box>
+    <Box
+      sx={{
+        position: 'center',
+        width: {
+          xs: '95vw',
+          sm: '510px',
+        },
+      }}
+    >
       {weather.dt ? (
         <Box>
           <Box sx={{ marginLeft: '3px' }}>
-            <Typography fontSize="15px">{cnvtUniDate(weather.dt)}</Typography>
-            <Typography variant="h3">{location.name}</Typography>
-
-            <Box sx={{ display: 'inline-flex' }}>
+            <Typography /* Date */ fontSize="15px">
+              {cnvtUniDate(weather.dt)}
+            </Typography>
+            <Typography /* Location */
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+              variant="h3"
+            >
+              {location.name}
+            </Typography>
+            <Box /* Temperature */ sx={{ display: 'inline-flex' }}>
               <Typography
                 variant="h4"
                 sx={{
@@ -37,12 +55,12 @@ export default function WeatherWidget({ weather, location }) {
                 />
               </Box>
             </Box>
-            <Typography variant="h5">
+            <Typography /* Feels Like */ variant="h5">
               {`Feels Like ${Math.round(
                 weather.main.feels_like,
               )}°C. ${capitalFirstL(weather.weather[0].description)}.`}
             </Typography>
-            <Typography variant="h5">
+            <Typography /* Weather Description */ variant="h5">
               {weather.rain
                 ? Object.keys(weather.rain).map(
                     (time) => `Rain in ${time} ${weather.rain[time]}mm.`,
@@ -56,7 +74,7 @@ export default function WeatherWidget({ weather, location }) {
             </Typography>
           </Box>
 
-          <Grid container spacing={3}>
+          <Grid /* detailed forecast */ container spacing={3}>
             <Grid item xs={6}>
               <Box
                 sx={{

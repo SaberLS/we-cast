@@ -4,18 +4,17 @@ import { React, useState, useEffect } from 'react';
 // styling
 import './App.css';
 import { ThemeProvider } from '@emotion/react';
+
+// Material UI Components
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
 import { theme } from '../../Themes/theme';
 
-// Mui
-// import Button from "@mui/material/Button";
-
-// components
+// Components
 import SearchAppBar from '../AppBar/SearchAppBar.jsx';
 import ForecastTable from '../Forecast/ForecastTable.jsx';
 import WeatherWidget from '../WeatherWidget/WeatherWidget.jsx';
+import Chart from '../Forecast/Chart.jsx';
 
 // API Calls
 import getForecast from '../../ApiCall/getForecast';
@@ -36,7 +35,6 @@ import {
 // IN MY CASE apiKey WAS IMPORTED FROM FILE WHICH GOT IGNORED TO KEEP MY KEY PRIVATE
 // YOU CAN GET API KEY HERE: https://openweathermap.org/api
 import { apiKey } from '../../apiKey.js';
-import Chart from '../Forecast/Chart/Chart.jsx';
 
 function App() {
   const [location, setLocation] = useState(initLocation);
@@ -120,19 +118,6 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Button onClick={() => console.log('location:', location)}>
-        location
-      </Button>
-      <Button onClick={() => console.log('searchLocation:', searchLocation)}>
-        searchLocation
-      </Button>
-      <Button onClick={() => console.log('forecast:', forecast)}>
-        forecast
-      </Button>
-      <Button onClick={() => console.log('currentWeather:', currentWeather)}>
-        currentWeather
-      </Button>
-
       <Container maxWidth={false} disableGutters>
         <SearchAppBar
           searchLocation={searchLocation}
